@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+
+<head>
+  <title>
+    Create a Match
+  </title>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" th:href="@{/css/createEvent.css}">
+</head>
+
+<body>
+
+
+  <div class="form-style-2">
+    <h1 id="createEventheader">Create a Match</h1>
+    <form action="/create_match" method="post">
+    <label for="matchName"><span>Match Name <span class="required">*</span></span><input type="text" class="input-field" name="matchName" value="" /></label>
+    <label for="field2"><span>Match Date <span class="required">*</span></span><input type="datetime-local" class="input-field2" name="matchDate" value="" /> To <input type="datetime-local" class="input-field2" name="eventEndDT" value="" /></label>
+
+    </select></label>
+    <label for="sheetNumber"><span>Sheet Number<span class="required">*</span></span><input type="number" class="input-field" name="sheetNumber" value="" /></label>
+    
+    <div >
+        <label for="items" style="font-size: larger;">Choose a Team 1:</label>
+        <select id="items" name="teamId1" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"> 
+            
+           <option th:each="team : ${teamList}"  th:value="${team.teamId}" th:text="${team.teamName}" >
+
+           </option>
+         </select>
+      </div>
+
+      <div >
+        <label for="items" style="font-size: larger;">Choose a Team 2:</label>
+        <select id="items" name="teamId2" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"> 
+            
+           <option th:each="team : ${teamList}"  th:value="${team.teamId}" th:text="${team.teamName}" >
+
+           </option>
+         </select>
+      </div>
+    <label><span> </span><input type="submit" value="Create Match" /></label>
+    </form>
+    </div>
+
+    <br>
+    <br>
+   
+    <table class="table table-dark">
+      <thead class="thead">
+        <tr>
+          <th scope="col">Match Name</th>
+          <th scope="col">Team 1</th>
+          <th scope="col">Team 2</th>
+          <th scope="col">Date</th>
+          <th scope="col">Sheet Number</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="match : ${usersMatches}">
+          <form th:action="@{/goToEditMatch?matchId=} + ${match.getMatchId()}" method="POST"> 
+  
+          <th scope="row" th:text="${match.matchName}"></th>
+          <td th:text="${match.team1Name}"></td>
+          <td th:text="${match.team2Name}"></td>
+          <td th:text="${match.dateAndTime}"></td>
+          <td th:text="${match.sheetNumber}"></td>
+          <td> <input type="submit" value="Edit Match" class="registerBtn"> </td>
+   
+      </form>
+        </tr>
+   
+      </tbody>
+    </table>
+  
+</body>
+
+</html>
